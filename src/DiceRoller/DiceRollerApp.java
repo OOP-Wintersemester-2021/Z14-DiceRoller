@@ -8,12 +8,19 @@ import de.ur.mi.oop.launcher.GraphicsAppLauncher;
 
 import java.util.Random;
 
+/**
+ * This GraphicsApp displays a number of dice with randomly generated valued (1 to 6). Pressing any key will
+ * automatically change the displayed values to a new, randomly generated, set of numbers.
+ */
+
 public class DiceRollerApp extends GraphicsApp {
 
     private static final int CANVAS_WIDTH = 950;
     private static final int CANVAS_HEIGHT = 200;
     private static final Color CANVAS_BACKGROUND = Colors.WHITE;
+    // Number of dice to be displayed
     private static final int NUMBER_OF_DICE = 6;
+    // Arry to hold all displayed dice
     private Die[] dice;
 
     @Override
@@ -23,6 +30,9 @@ public class DiceRollerApp extends GraphicsApp {
         rollDice();
     }
 
+    /**
+     * Creates and returns an array of Dice with default values
+     */
     private Die[] createDice() {
         Die[] dice = new Die[NUMBER_OF_DICE];
         int x = Die.DIE_SIZE / 2;
@@ -40,24 +50,33 @@ public class DiceRollerApp extends GraphicsApp {
         drawDice();
     }
 
+    /**
+     * Draws all dice in array
+     */
     public void drawDice() {
         for (Die die : dice) {
             die.draw();
         }
     }
 
-    public void rollDice() {
-        Random random = new Random();
-        for(int i = 0; i < dice.length; i++) {
-            int randomValue = 1 + random.nextInt(6);
-            dice[i].setValue(randomValue);
-        }
-    }
-
+    /**
+     * Foreshadowing next weeks topic, this method is called ONCE every time a key is pressed while the application is running
+     */
     @Override
     public void onKeyPressed(KeyPressedEvent event) {
         super.onKeyPressed(event);
         rollDice();
+    }
+
+    /**
+     * Randomly rolls and sets new values for all dice
+     */
+    public void rollDice() {
+        Random random = new Random();
+        for (int i = 0; i < dice.length; i++) {
+            int randomValue = 1 + random.nextInt(Die.MAX_VALUE);
+            dice[i].setValue(randomValue);
+        }
     }
 
     public static void main(String[] args) {
